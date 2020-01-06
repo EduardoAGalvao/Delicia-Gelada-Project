@@ -123,7 +123,8 @@ header{
   justify-content: space-between;
 }
 
-.preenchimento_autenticacao{
+.preenchimento_autenticacao,
+.preenchimento_autenticacao_interna{
   display: flex;
   flex-direction: column;
 }
@@ -961,11 +962,13 @@ height: 400px;
 }
 
 #img_fruta_descascada{
-  background-image: url(../img/mensalistic_limao.png);
-  background-size: contain;
-  background-repeat: no-repeat;
   height: 200px;
   width: 300px;
+}
+
+#img_fruta_descascada img{
+  height: inherit;
+  width: auto;
 }
 
 #sobre_fruta_descricao{
@@ -977,11 +980,14 @@ height: 400px;
 }
 
 #mensalistic_garrafa{
-  background-image: url(../img/bottle_green.png);
-  background-size: contain;
-  background-repeat: no-repeat;
   height: inherit;
-  width: 150px;
+  width: 300px;
+}
+
+#mensalistic_garrafa img{
+  height: inherit;
+  width: auto;
+  max-width: 300px;
 }
 
 #banner_mensalistic_meio{
@@ -1026,9 +1032,11 @@ height: 400px;
 #img_mensalistic_cliente{
   width: 500px;
   height: 500px;
-  background-image: url(../img/mensalistic_cliente.png);
-  background-size: contain;
-  background-repeat: no-repeat;
+}
+
+#img_mensalistic_cliente img{
+  height: inherit;
+  width: inherit;
 }
 
 #mensalistic_cliente div p{
@@ -1042,9 +1050,110 @@ height: 400px;
 #banner_mensalistic_final{
   width: 600px;
   height: 450px;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-image: url(../img/banner_mensalistic_final.png);
+}
+
+#banner_mensalistic_final img{
+  width: inherit;
+  height: inherit;
+}
+
+/*LOGIN - AUTENTICACAO INTERNA*/
+.autenticacao_interna{
+    background-image: url(../img/login_background.png);
+    width: 100%;
+    height: 100vh;
+}
+
+.autenticacao_interna #container_principal{
+    margin-top: 0px;
+    padding-top: 50px;
+}
+
+#div_autenticacao{
+    background-color: #ffffff;
+    height: 650px;
+    width: 450px;
+    padding: 30px;
+    box-sizing: border-box;
+    left: 35%;
+    position: fixed;
+}
+
+#div_autenticacao h1{
+  font-family: robotoLight;
+  padding: 10px 0px;
+  color: #27558C;
+}
+
+#div_autenticacao span{
+  color: #F48969;
+}
+
+#div_autenticacao p{
+  line-height: 1.7;
+}
+
+.preenchimento_autenticacao_interna{
+  padding: 10px 40px;
+  box-sizing: border-box;
+}
+
+.preenchimento_autenticacao_interna input{
+  border-radius: 10px;
+  border: 2px solid
+  #27558C;
+  width: 300px;
+  height: 40px;
+  padding: 5px;
+  box-sizing: border-box;
+  font-size: 22px;
+  box-shadow: 0 8px 6px -6px black;
+}
+
+.preenchimento_autenticacao_interna label{
+  font-size: 20px;
+  letter-spacing: 2px;
+  padding-bottom: 10px;
+  color: #5f5f5f !important;
+}
+
+#btnSubmitAutenticacaoInterna{
+  font-size: 24px;
+  border: 2px solid #F48969;
+  width: 180px;
+  height: 50px;
+  color: #ffffff;
+  background-color: #F48969;
+  border-radius: 40px;
+  margin: 40px 0px 0px 100px;
+  transition: 0.5s;
+}
+
+#btnSubmitAutenticacaoInterna:hover{
+  color: #F48969;
+  background-color: #ffffff;
+  transition: 0.5s;
+}
+
+#frm_autenticacao_interna{
+  margin-top: 40px;
+}
+
+#autenticacao_links{
+  display: flex;
+  justify-content: space-between;
+  padding-top: 40px;
+}
+
+#autenticacao_links a{
+  color: #336eb5;
+  font-size: 18px;
+  transition: 0.5s;
+}
+
+#autenticacao_links a:hover{
+  color: #27558C;
+  transition: 0.5s;
 }
 
 /*RODAPÉ*/
