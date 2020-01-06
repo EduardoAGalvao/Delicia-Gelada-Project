@@ -51,12 +51,13 @@ OBS: Some of the pages content requires data to work. To elect a product of mont
 <img src="./projeto_delicia_gelada/gif/cms_content.gif" title="CMS Content Management" alt="CMS Content Management"/>
 
 Next Steps:
--> CMS management of the pages A Empresa and Lojas;
--> Apply the changes made in CMS in the Curiosidades page;
--> Responsiveness implementation.
+- CMS management of the pages A Empresa and Lojas;
+- Apply the changes made in CMS in the Curiosidades page;
+- Responsiveness implementation.
 
 Version: 1.0 - 02/10/2019
-Version: 2.0 - 06/01/2019
+
+Version: 2.0 - 06/01/2020
 
 *Everything made with a lot of curiosity and programming passion* 
 
