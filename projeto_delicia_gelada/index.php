@@ -1,3 +1,12 @@
+<?php
+
+session_start();
+
+require_once("./db/conexao.php");
+
+$conexao = conexaoMysql();
+
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
@@ -38,7 +47,7 @@
             <nav>
               <ul id="menu">
                 <li class="menu_item">
-                  <a href="index.html">HOME</a>
+                  <a href="index.php">HOME</a>
                 </li>
                 <li class="menu_item">
                   <a href="empresa.php">A EMPRESA</a>
@@ -64,7 +73,7 @@
 
           <!--AUTENTICAÇÃO-->
           <div id="autenticacao_cms">
-            <form name="frm_autenticacao" method="post" action="index.html" >
+            <form name="frm_autenticacao" method="post" action="./db/autenticacao.php" >
               <div class="preenchimento_autenticacao">
                 <label id="lbl_usuario" for="txt_usuario">Usuário</label>
                 <input id="txt_usuario" name="txt_usuario" type="text"/>
@@ -135,33 +144,47 @@
             <div class="conteudo center">
               <div class="section">
                 <ul id="menu_categorias">
-                  <li><a href="">CATEGORIA</a></li>
-                  <li class="link_submenu">CATEGORIA<div class="dropdown_arrow"></div>
+                  
+                  <?php
+                  
+                    $sql = "SELECT * FROM tbl_categorias WHERE data_remocao IS NULL;";
+                  
+                    $select = mysqli_query($conexao, $sql);
+                  
+                    while($categoria = mysqli_fetch_assoc($select)){
+                  
+                  ?>
+                  
+                  <li class="link_submenu" id="categoria_<?= $categoria['id_categoria'] ?>"><?= $categoria['nome_categoria'] ?><div class="dropdown_arrow"></div>
                     <ul class="submenu">
-                      <li>ITEM</li>
-                      <li>ITEM</li>
-                      <li>ITEM</li>
-                      <li>ITEM</li>
-                      <li>ITEM</li>
+                      
+                      <?php
+                      
+                        $sqlSub = "SELECT * FROM tbl_subcategorias WHERE data_remocao IS NULL AND id_categoria = ". $categoria['id_categoria'];
+                  
+                        $selectSub = mysqli_query($conexao, $sqlSub);
+
+                        while($subcategoria = mysqli_fetch_assoc($selectSub)){
+                      
+                      ?>
+                      
+                      <li class="link_subcategoria" id="subcategoria_<?= $subcategoria['id_subcategoria'] ?>" ><?= $subcategoria['nome_subcategoria'] ?></li>
+                      
+                      <?php
+                      
+                        }
+                      
+                      ?>
+                      
                     </ul>
                   </li>
-                  <li><a href="">CATEGORIA</a></li>
-                  <li class="link_submenu">CATEGORIA<div class="dropdown_arrow"></div>
-                    <ul class="submenu">
-                      <li>ITEM</li>
-                      <li>ITEM</li>
-                      <li>ITEM</li>
-                      <li>ITEM</li>
-                      <li>ITEM</li>
-                    </ul>
-                  </li>
-                  <li><a href="">CATEGORIA</a></li>
-                  <li><a href="">CATEGORIA</a></li>
-                  <li><a href="">CATEGORIA</a></li>
-                  <li><a href="">CATEGORIA</a></li>
-                  <li><a href="">CATEGORIA</a></li>
-                  <li><a href="">CATEGORIA</a></li>
-                  <li><a href="">CATEGORIA</a></li>
+                  
+                  <?php
+                  
+                    }
+                      
+                  ?>
+                  
                 </ul>
               </div>
             </div>
@@ -173,134 +196,39 @@
               <div id="section">
 
                 <div id="container_produtos">
+                  
+                  <?php
+                  
+                    $sql = "SELECT * FROM tbl_produtos WHERE data_remocao IS NULL AND ativado = '1' ORDER BY RAND( );";
+                  
+                    $select = mysqli_query($conexao, $sql);
+                  
+                    while($rs = mysqli_fetch_assoc($select)){
+                  
+                  ?>
+                  
                   <div class="produto">
                     <div class="produto_imagem">
-                      <img src="./img/bottle_silver.png" alt="Garrafa de Suco do Delícia Gelada" title="Garrafa de Suco do Delícia Gelada"/>
+                      <img src="./db/arquivos/<?= $rs['imagem'] ?>" alt="Garrafa de Suco do Delícia Gelada - Sabor <?= $rs['nome_produto'] ?>" title="Garrafa de Suco do Delícia Gelada - Sabor <?= $rs['nome_produto'] ?>"/>
                     </div>
                     <div class="produto_informacoes">
-                      <h2>Sabor Lorem Ipsum 1L</h2>
+                      <h2><?= $rs['nome_produto'] ?></h2>
                       <div class="produto_descricao">
-                        <p>Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum</p>
+                        <p><?= substr($rs['descricao'], 0, 45) . "..." ?></p>
                       </div>
-                      <p class="info_preco">R$ 19,90</p>
+                      <p class="info_preco">R$ <?= $rs['preco'] ?></p>
                     </div>
                     <div class="produto_detalhes center">
                       <p>DETALHES</p>
                     </div>
                   </div>
-
-                  <div class="produto">
-                    <div class="produto_imagem">
-                      <img src="./img/bottle_blue.png" alt="Garrafa de Suco do Delícia Gelada" title="Garrafa de Suco do Delícia Gelada"/>
-                    </div>
-                    <div class="produto_informacoes">
-                      <h2>Sabor Lorem Ipsum 1L</h2>
-                      <div class="produto_descricao">
-                        <p>Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum</p>
-                      </div>
-                      <p class="info_preco">R$ 19,90</p>
-                    </div>
-                    <div class="produto_detalhes center">
-                      <p>DETALHES</p>
-                    </div>
-                  </div>
-
-                  <div class="produto">
-                    <div class="produto_imagem">
-                      <img src="./img/bottle_green.png" alt="Garrafa de Suco do Delícia Gelada" title="Garrafa de Suco do Delícia Gelada"/>
-                    </div>
-                    <div class="produto_informacoes">
-                      <h2>Sabor Lorem Ipsum 1L</h2>
-                      <div class="produto_descricao">
-                        <p>Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum</p>
-                      </div>
-                      <p class="info_preco">R$ 19,90</p>
-                    </div>
-                    <div class="produto_detalhes center">
-                      <p>DETALHES</p>
-                    </div>
-                  </div>
-
-                  <div class="produto">
-                    <div class="produto_imagem">
-                      <img src="./img/bottle_orange.png" alt="Garrafa de Suco do Delícia Gelada" title="Garrafa de Suco do Delícia Gelada"/>
-                    </div>
-                    <div class="produto_informacoes">
-                      <h2>Sabor Lorem Ipsum 1L</h2>
-                      <div class="produto_descricao">
-                        <p>Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum</p>
-                      </div>
-                      <p class="info_preco">R$ 19,90</p>
-                    </div>
-                    <div class="produto_detalhes center">
-                      <p>DETALHES</p>
-                    </div>
-                  </div>
-
-                  <div class="produto">
-                    <div class="produto_imagem">
-                      <img src="./img/bottle_yellow.png" alt="Garrafa de Suco do Delícia Gelada" title="Garrafa de Suco do Delícia Gelada"/>
-                    </div>
-                    <div class="produto_informacoes">
-                      <h2>Sabor Lorem Ipsum 1L</h2>
-                      <div class="produto_descricao">
-                        <p>Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum</p>
-                      </div>
-                      <p class="info_preco">R$ 19,90</p>
-                    </div>
-                    <div class="produto_detalhes center">
-                      <p>DETALHES</p>
-                    </div>
-                  </div>
-
-                  <div class="produto">
-                    <div class="produto_imagem">
-                      <img src="./img/bottle_deluxe_purple.png" alt="Garrafa de Suco do Delícia Gelada" title="Garrafa de Suco do Delícia Gelada"/>
-                    </div>
-                    <div class="produto_informacoes">
-                      <h2>Sabor Lorem Ipsum 1L</h2>
-                      <div class="produto_descricao">
-                        <p>Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum</p>
-                      </div>
-                      <p class="info_preco">R$ 29,90</p>
-                    </div>
-                    <div class="produto_detalhes center">
-                      <p>DETALHES</p>
-                    </div>
-                  </div>
-
-                  <div class="produto">
-                    <div class="produto_imagem">
-                      <img src="./img/bottle_deluxe_red.png" alt="Garrafa de Suco do Delícia Gelada" title="Garrafa de Suco do Delícia Gelada"/>
-                    </div>
-                    <div class="produto_informacoes">
-                      <h2>Sabor Lorem Ipsum 1L</h2>
-                      <div class="produto_descricao">
-                        <p>Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum</p>
-                      </div>
-                      <p class="info_preco">R$ 29,90</p>
-                    </div>
-                    <div class="produto_detalhes center">
-                      <p>DETALHES</p>
-                    </div>
-                  </div>
-
-                  <div class="produto">
-                    <div class="produto_imagem">
-                      <img src="./img/bottle_deluxe_blue.png" alt="Garrafa de Suco do Delícia Gelada" title="Garrafa de Suco do Delícia Gelada"/>
-                    </div>
-                    <div class="produto_informacoes">
-                      <h2>Sabor Lorem Ipsum 1L</h2>
-                      <div class="produto_descricao">
-                        <p>Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum</p>
-                      </div>
-                      <p class="info_preco">R$ 29,90</p>
-                    </div>
-                    <div class="produto_detalhes center">
-                      <p>DETALHES</p>
-                    </div>
-                  </div>
-
+                  
+                  <?php
+                  
+                    }
+                      
+                  ?>
+                  
                 </div>
               </div>
             </div>

@@ -1,3 +1,12 @@
+<?php
+
+session_start();
+
+require_once("./db/conexao.php");
+
+$conexao = conexaoMysql();
+
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
@@ -38,7 +47,7 @@
             <nav>
               <ul id="menu">
                 <li class="menu_item">
-                  <a href="index.html">HOME</a>
+                  <a href="index.php">HOME</a>
                 </li>
                 <li class="menu_item">
                   <a href="empresa.php">A EMPRESA</a>
@@ -64,7 +73,7 @@
 
           <!--AUTENTICAÇÃO-->
           <div id="autenticacao_cms">
-            <form name="frm_autenticacao" method="post" >
+            <form name="frm_autenticacao" method="post" action="./db/autenticacao.php" >
               <div class="preenchimento_autenticacao">
                 <label id="lbl_usuario" for="txt_usuario">Usuário</label>
                 <input id="txt_usuario" name="txt_usuario" type="text"/>
@@ -101,141 +110,39 @@
               <div id="section">
 
                 <div id="container_produtos">
-                  <div class="produto">
-                    <div class="produto_imagem">
-                      <img src="./img/bottle_silver.png" alt="Garrafa de 1L - Sabor Lorem Ipsum" title="Garrafa de 1L - Sabor Lorem Ipsum"/>
-                    </div>
-                    <div class="produto_informacoes">
-                      <h2>Sabor Lorem Ipsum 1L</h2>
-                      <div class="produto_descricao">
-                        <p>Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum</p>
-                      </div>
-                      <p class="info_preco">R$ 19,90</p>
-                      <p class="info_preco_promocao">R$ 14,90</p>
-                    </div>
-                    <div class="produto_detalhes center">
-                      <p>DETALHES</p>
-                    </div>
-                  </div>
+                  
+                  <?php
+                  
+                    $sql = "SELECT * FROM tbl_promocoes promo JOIN tbl_produtos prod ON promo.id_produto = prod.id_produto WHERE promo.data_remocao IS NULL;";
 
-                  <div class="produto">
-                    <div class="produto_imagem">
-                      <img src="./img/bottle_blue.png" alt="Garrafa de 1L - Sabor Lorem Ipsum" title="Garrafa de 1L - Sabor Lorem Ipsum"/>
-                    </div>
-                    <div class="produto_informacoes">
-                      <h2>Sabor Lorem Ipsum 1L</h2>
-                      <div class="produto_descricao">
-                        <p>Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum</p>
-                      </div>
-                      <p class="info_preco">R$ 19,90</p>
-                      <p class="info_preco_promocao">R$ 14,90</p>
-                    </div>
-                    <div class="produto_detalhes center">
-                      <p>DETALHES</p>
-                    </div>
-                  </div>
+                    $select = mysqli_query($conexao, $sql);
 
+                    while($rs = mysqli_fetch_assoc($select)){
+                  
+                  ?>
+                  
                   <div class="produto">
                     <div class="produto_imagem">
-                      <img src="./img/bottle_green.png" alt="Garrafa de 1L - Sabor Lorem Ipsum" title="Garrafa de 1L - Sabor Lorem Ipsum"/>
+                      <img src="./db/arquivos/<?= $rs['imagem'] ?>" alt="Garrafa de 1L - Sabor <?= $rs['nome_produto'] ?>" title="Garrafa de 1L - Sabor <?= $rs['nome_produto'] ?>"/>
                     </div>
                     <div class="produto_informacoes">
-                      <h2>Sabor Lorem Ipsum 1L</h2>
+                      <h2><?= $rs['nome_produto'] ?></h2>
                       <div class="produto_descricao">
-                        <p>Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum</p>
+                        <p><?= substr($rs['descricao'], 0, 45) . "..." ?></p>
                       </div>
-                      <p class="info_preco">R$ 19,90</p>
-                      <p class="info_preco_promocao">R$ 14,90</p>
+                      <p class="info_preco">R$ <?= $rs['preco'] ?></p>
+                      <p class="info_preco_promocao"><?= "R$ ". round($rs['preco'] - ($rs['preco']*$rs['desconto']/100), 2) ?></p>
                     </div>
                     <div class="produto_detalhes center">
                       <p>DETALHES</p>
                     </div>
                   </div>
-
-                  <div class="produto">
-                    <div class="produto_imagem">
-                      <img src="./img/bottle_orange.png" alt="Garrafa de 1L - Sabor Lorem Ipsum" title="Garrafa de 1L - Sabor Lorem Ipsum"/>
-                    </div>
-                    <div class="produto_informacoes">
-                      <h2>Sabor Lorem Ipsum 1L</h2>
-                      <div class="produto_descricao">
-                        <p>Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum</p>
-                      </div>
-                      <p class="info_preco">R$ 19,90</p>
-                      <p class="info_preco_promocao">R$ 14,90</p>
-                    </div>
-                    <div class="produto_detalhes center">
-                      <p>DETALHES</p>
-                    </div>
-                  </div>
-
-                  <div class="produto">
-                    <div class="produto_imagem">
-                      <img src="./img/bottle_yellow.png" alt="Garrafa de 1L - Sabor Lorem Ipsum" title="Garrafa de 1L - Sabor Lorem Ipsum"/>
-                    </div>
-                    <div class="produto_informacoes">
-                      <h2>Sabor Lorem Ipsum 1L</h2>
-                      <div class="produto_descricao">
-                        <p>Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum</p>
-                      </div>
-                      <p class="info_preco">R$ 19,90</p>
-                      <p class="info_preco_promocao">R$ 14,90</p>
-                    </div>
-                    <div class="produto_detalhes center">
-                      <p>DETALHES</p>
-                    </div>
-                  </div>
-
-                  <div class="produto">
-                    <div class="produto_imagem">
-                      <img src="./img/bottle_deluxe_purple.png" alt="Garrafa de 1L - Sabor Lorem Ipsum" title="Garrafa de 1L - Sabor Lorem Ipsum"/>
-                    </div>
-                    <div class="produto_informacoes">
-                      <h2>Sabor Lorem Ipsum 1L</h2>
-                      <div class="produto_descricao">
-                        <p>Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum</p>
-                      </div>
-                      <p class="info_preco">R$ 29,90</p>
-                      <p class="info_preco_promocao">R$ 25,90</p>
-                    </div>
-                    <div class="produto_detalhes center">
-                      <p>DETALHES</p>
-                    </div>
-                  </div>
-
-                  <div class="produto">
-                    <div class="produto_imagem">
-                      <img src="./img/bottle_deluxe_red.png" alt="Garrafa de 1L - Sabor Lorem Ipsum" title="Garrafa de 1L - Sabor Lorem Ipsum"/>
-                    </div>
-                    <div class="produto_informacoes">
-                      <h2>Sabor Lorem Ipsum 1L</h2>
-                      <div class="produto_descricao">
-                        <p>Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum</p>
-                      </div>
-                      <p class="info_preco">R$ 29,90</p>
-                      <p class="info_preco_promocao">R$ 25,90</p>
-                    </div>
-                    <div class="produto_detalhes center">
-                      <p>DETALHES</p>
-                    </div>
-                  </div>
-
-                  <div class="produto">
-                    <div class="produto_imagem">
-                      <img src="./img/bottle_deluxe_blue.png" alt="Garrafa de 1L - Sabor Lorem Ipsum" title="Garrafa de 1L - Sabor Lorem Ipsum"/>
-                    </div>
-                    <div class="produto_informacoes">
-                      <h2>Sabor Lorem Ipsum 1L</h2>
-                      <div class="produto_descricao">
-                        <p>Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum</p>
-                      </div>
-                      <p class="info_preco">R$ 29,90</p>
-                      <p class="info_preco_promocao">R$ 25,90</p>
-                    </div>
-                    <div class="produto_detalhes center">
-                      <p>DETALHES</p>
-                    </div>
-                  </div>
+                  
+                  <?php
+                  
+                    }
+                  
+                  ?>
 
                 </div>
               </div>

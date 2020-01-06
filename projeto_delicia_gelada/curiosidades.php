@@ -38,7 +38,7 @@
             <nav>
               <ul id="menu">
                 <li class="menu_item">
-                  <a href="index.html">HOME</a>
+                  <a href="index.php">HOME</a>
                 </li>
                 <li class="menu_item">
                   <a href="empresa.php">A EMPRESA</a>
@@ -64,7 +64,7 @@
 
           <!--AUTENTICAÇÃO-->
           <div id="autenticacao_cms">
-            <form name="frm_autenticacao" method="post" >
+            <form name="frm_autenticacao" method="post" action="./db/autenticacao.php" >
               <div class="preenchimento_autenticacao">
                 <label id="lbl_usuario" for="txt_usuario">Usuário</label>
                 <input id="txt_usuario" name="txt_usuario" type="text"/>

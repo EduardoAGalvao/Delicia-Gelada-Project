@@ -1,3 +1,12 @@
+<?php
+
+session_start();
+
+require_once("./db/conexao.php");
+
+$conexao = conexaoMysql();
+
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
@@ -38,7 +47,7 @@
             <nav>
               <ul id="menu">
                 <li class="menu_item">
-                  <a href="index.html">HOME</a>
+                  <a href="index.php">HOME</a>
                 </li>
                 <li class="menu_item">
                   <a href="empresa.php">A EMPRESA</a>
@@ -64,7 +73,7 @@
 
           <!--AUTENTICAÇÃO-->
           <div id="autenticacao_cms">
-            <form name="frm_autenticacao" method="post" >
+            <form name="frm_autenticacao" method="post" action="./db/autenticacao.php" >
               <div class="preenchimento_autenticacao">
                 <label id="lbl_usuario" for="txt_usuario">Usuário</label>
                 <input id="txt_usuario" name="txt_usuario" type="text"/>
@@ -102,17 +111,31 @@
         </div>
 
         <section id="container_mensalistic">
+          
+          <?php
+                  
+            $sql = "SELECT * FROM tbl_mensalistic WHERE ativado = 1";
 
-          <h1>Meu limão, meu limoeiro</h1>
+            $select = mysqli_query($conexao, $sql);
+
+            while($rs = mysqli_fetch_assoc($select)){
+
+          ?>
+
+          <h1><?= $rs['titulo'] ?></h1>
 
           <!--SOBRE A FRUTA-->
           <div id="mensalistic_sobre_fruta" class="center">
-            <div id="img_fruta_descascada"></div>
+            <div id="img_fruta_descascada">
+              <img src="./db/arquivos/<?= $rs['imagem1_inicio'] ?>">
+            </div>
             <div id="sobre_fruta_descricao">
-              <p>O limão é a fruta cítrica predileta dos sabores da Delícia Gelada, todos os limões ganham um incrível cuidado no momento da colheita, direto à produção dos sucos
+              <p><?= $rs['texto_inicio'] ?>
               </p>
             </div>
-            <div id="mensalistic_garrafa"></div>
+            <div id="mensalistic_garrafa">
+              <img src="./db/arquivos/<?= $rs['imagem2_inicio'] ?>">
+            </div>
           </div>
 
           <!--BANNER LIMOEIRO-->
@@ -121,10 +144,10 @@
           <!--TOPICOS - MENSALISTIC-->
           <div id="mensalistic_indicadores">
             <ul>
-              <li><span>5 milhões</span> de limões colhidos por mês</li>
-              <li><span>Top 3</span> dos sabores mais vendidos</li>
-              <li>Versão <span>Deluxe</span> exclusiva</li>
-              <li><span>3 mil</span> fazendas com limoeiros</li>
+              <li><span>5 milhões</span> de frutas colhidas por mês</li>
+              <li><span>Top 3</span> dos sabores mais vendidos no país</li>
+              <li>Versão <span>Deluxe</span> exclusiva de vários sabores</li>
+              <li><span>3 mil</span> fazendas no Brasil</li>
             </ul>
             <div id="img_mensalistic_indicadores"></div>
           </div>
@@ -132,18 +155,26 @@
           <!--MENSALISTIC - CLIENTE-->
           <div id="mensalistic_cliente">
             <div>
-              <p>Cada garrafa do Delícia Gelada no sabor Limão possui 4 limões em sua composição, misturados de forma balanceada com os melhores ingredientes para preservar o sabor e refrescância
-              </p>
+              <p><?= $rs['texto1_meio'] ?></p>
             </div>
-            <div id="img_mensalistic_cliente"></div>
+            <div id="img_mensalistic_cliente">
+              <img src="./db/arquivos/<?= $rs['imagem_meio'] ?>">
+            </div>
             <div>
-              <p>A versão Deluxe do sabor ressalta a acidez dos melhores limões, apesar de ser lançamento já é considerado um dos TOP vendas de 2019
-              </p>
+              <p><?= $rs['texto2_meio'] ?></p>
             </div>
           </div>
           
           <!--BANNER FINAL-->
-          <div id="banner_mensalistic_final" class="center"></div>
+          <div id="banner_mensalistic_final" class="center">
+            <img src="./db/arquivos/<?= $rs['imagem_final'] ?>">
+          </div>
+          
+          <?php
+              
+            }
+          
+          ?>
           
         </section>
             
